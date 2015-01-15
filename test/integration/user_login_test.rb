@@ -9,8 +9,6 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     visit root_url
   end
 
-  # test user can see login form on root page"
-
   test 'a user can login' do
     fill_in "session[username]", with: "name"
     fill_in "session[password]", with: "password"
@@ -20,14 +18,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'a user cannot can login' do
+  test 'an unregistered user cannot login' do
    click_link_or_button "Login"
    within('#flash_errors') do
      assert page.has_content?("Invalid")
    end
   end
 
-  test 'it has a user has associated ideas' do
+  test 'a user has associated ideas' do
     @idea = Idea.create(title: "idea", description: "description", user_id: user.id)
       ApplicationController.any_instance.stubs(:current_user).returns(user)
       visit user_path(user)
@@ -43,6 +41,27 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     click_link_or_button "Logout"
     within('#flash_notice') do
       assert page.has_content?("Logged out")
+    end
+  end
+
+  test 'registered user cannot view a another users profile' do
+    ApplicationController.any_instance.stubs(:current_user).returns(user)
+    user2 = User.create(username: "protected", password: "password", password_confirmation: "password")
+    visit user_path(user2)
+    within('#flash_alert') do
+      assert page.has_content?("not authorized")
+    end
+  end
+
+  test 'an admin user can login' do
+    skip
+    admin_user = User.create(username: "protected", password: "password", password_confirmation: "password", role: "admin")
+    visit root_path
+    fill_in "session[username]", with: "protected"
+    fill_in "session[password]", with: "password"
+    click_link_or_button "Login"
+    within("#admin") do
+      assert page.has_content?("Welcome Admin")
     end
   end
 end
