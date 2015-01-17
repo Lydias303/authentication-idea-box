@@ -1,0 +1,14 @@
+<h1 id="admin"> Hi Admin </h1>
+
+
+<%= render partial: 'shared/category_form', locals: {category: Category.new }  %>
+
+<ul id="category_list">
+  <% Category.all.each do |category| %>
+  <li> Category: <%= category.name %> </li>
+  <li>
+    <%= link_to("Edit", edit_category_path(category)) %>
+    <%= link_to("Delete", category_path(category), :method => 'delete') %>
+  </li>
+  <% end %>
+</ul>

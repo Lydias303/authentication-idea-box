@@ -5,13 +5,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
       flash[:notice] = "Login"
-      # redirect_to user.home_page
-      # redirect_to user_path(user)
-      redirect_to current_user_root
-    # elsif user && user.authenticate(params[:session][:password])
-    #   session[:user_id] = user.id
-    #   flash[:notice] = "Login"
-    #   redirect_to user_path(user)
+      redirect_to user_path(user)
+    
     else
       flash[:errors] = "Invalid"
       redirect_to root_url

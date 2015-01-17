@@ -14,12 +14,4 @@ class ApplicationController < ActionController::Base
   def authorize
     redirect_to root_url, alert: "not authorized" if current_user.nil?
   end
-
-  def current_user_root
-    if current_user.role == 'admin'
-      # implement
-    else
-      user_path(current_user)
-    end
-  end
 end
