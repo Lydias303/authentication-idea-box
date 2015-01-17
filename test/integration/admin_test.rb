@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserIdeasTest < ActionDispatch::IntegrationTest
+class AdminTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
   attr_reader :user
 
