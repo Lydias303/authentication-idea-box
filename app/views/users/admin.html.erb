@@ -12,3 +12,15 @@
   </li>
   <% end %>
 </ul>
+
+<%= render partial: 'shared/image_form', locals: {image: Image.new} %>
+
+<ul id="image_list">
+  <% Image.all.each do |image| %>
+  <li> Image: <%= image.title %> </li>
+  <li>        <%= image_tag image.img.url(:medium) %></li>
+  <li>
+    <%= link_to("Delete", image_path(image), :method => 'delete') %>
+  </li>
+  <% end %>
+</ul>

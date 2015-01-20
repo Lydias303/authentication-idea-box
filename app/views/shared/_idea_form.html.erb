@@ -1,14 +1,10 @@
 <div id="idea_form">
-  <%= form_for(idea)  do |f|%>
-
-  <%= f.label :title %><br/>
-  <%= f.text_field :title %>
-
-  <%= f.label :description %><br/>
-  <%= f.text_area :description %>
-  <%= f.collection_select(:category_id, Category.all, :id, :name) %>
-  <%= f.hidden_field :user_id %>
-
-  <%= f.submit "Create" %>
+  <%= bootstrap_form_for(idea, style: :inline )  do |f|%>
+    <%= f.text_field :title %>
+    <%= f.text_area :description %>
+    <%= f.collection_select(:category_id, Category.all, :id, :name) %>
+    <%= f.hidden_field :user_id %>
+    <%= f.collection_select(:images, Image.all, :id, :title, {}, {:multiple => true}) %>
+    <%= f.submit "Create" %>
   <% end %>
 </div>

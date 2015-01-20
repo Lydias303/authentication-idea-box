@@ -6,6 +6,7 @@ class AdminTest < ActionDispatch::IntegrationTest
 
   test 'an admin user can login' do
     admin_user = User.create(username: "protected", password: "password", password_confirmation: "password", role: "admin")
+    visit root_url
     fill_in "session[username]", with: "protected"
     fill_in "session[password]", with: "password"
     click_link_or_button "Login"
@@ -60,6 +61,16 @@ class AdminTest < ActionDispatch::IntegrationTest
     click_link_or_button "Update"
     within('#category_list') do
       assert page.has_content?("new")
+    end
+  end
+
+  test ' a logged in admin can create an image' do
+    admin_user = User.create(username: "protected", password: "password", password_confirmation: "password", role: "admin")
+    ApplicationController.any_instance.stubs(:current_user).returns(admin_user)
+    Image.create(title: "title" img: "url")
+    visit admin_path
+    within("#images") do
+      assert page.has_content?("title")
     end
   end
 end

@@ -1,15 +1,16 @@
-<div>
-  <%= form_for(@idea)  do |f|%>
+<div id="edit-form">
+  <%= bootstrap_form_for(@idea, layout: :inline)  do |f|%>
 
-  <%= f.label :title %><br/>
   <%= f.text_field :title %>
 
-  <%= f.label :description %><br/>
   <%= f.text_area :description %>
 
-  <%= f.collection_select(:category_id, Category.all, :id, :name) %>
+  <%= f.collection_select(:category_id, Category.all, :id, :name, class: "form-control", prompt: "Select a category" ) %>
   <%= f.hidden_field :user_id %>
 
+  <%= f.collection_select(:images, Image.all, :id, :title, {}, {:multiple => true}) %>
+
   <%= f.submit "Update" %>
+
   <% end %>
 </div>
