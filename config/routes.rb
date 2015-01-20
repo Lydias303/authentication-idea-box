@@ -10,12 +10,12 @@ Rails.application.routes.draw do
 
   post '/login', to: 'sessions#create'
 
-  post '/logout', to: 'sessions#destroy'
+  post '/logout', to: 'sessions#destroy', as: 'logout'
 
    get  '/admin',  to: 'users#admin', as: 'admin'
 
 
-  resources :users, :ideas, :categories
+  resources :users, :ideas, :categories, :images
   # get 'sessions#new'
 
 end

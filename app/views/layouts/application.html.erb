@@ -7,13 +7,35 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  
-  <% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  <%= nav_bar fixed: :top, brand: "Idea Box", responsive: true do %>
+  <%= menu_group do %>
+  <%= menu_item "Home", root_path %>
+
+  <% if current_user %>
+  <%= menu_item "Ideas", user_path(current_user)%>
+  <% if current_user.admin? %>
+  <%= menu_item "Admin Page", admin_path %>
   <% end %>
-<%= yield %>
-<%= button_to "Logout", {:controller => :sessions,
-                         :action     => :destroy},
-                         :method     => :destroy %>
-</body>
-</html>
+  <% end %>
+  <% end %>
+
+  <%= menu_group pull: :right do %>
+  <% if current_user %>
+  <%= menu_item "Log Out", logout_path, method: :destroy %>
+  <% else %>
+  <%= form_for :session, url: login_path, :html => {class: "navbar-form pull-right"} do |f| -%>
+  <%= f.text_field :username, :placeholder => "Username" %>
+  <%= f.password_field :password, :placeholder => "Password" %>
+  <%= f.submit "Sign in" %>
+  <% end -%>
+  <% end %>
+  <% end %>
+  <% end %>
+
+  <div class="container main-content">
+  <%= flash_messages %>
+  <%= yield %>
+
+  </div>
+  </body>
+  </html>

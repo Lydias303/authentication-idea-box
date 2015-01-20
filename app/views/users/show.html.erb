@@ -6,18 +6,35 @@
   <% end %>
 </div>
 
-<ul id="ideas">
+<h2> Your Ideas </h2>
+
+<table class="table">
   <% @user.ideas.each do |idea| %>
   <% unless idea.new_record? %>
-  <li>title: <%= idea.title %> </li>
-  <li>description <%= idea.description %></li>
-  <li> category <%= idea.category.name %></li>
-  <li> <%= link_to("Edit", edit_idea_path(idea)) %>
-    <%= link_to("Delete", idea_path(idea), :method => 'delete') %>
-  </li>
+  <tr>
+    <th> Title </th>
+  <td> <%= idea.title %> </td>
+</tr>
+  <tr>
+  <th> Description </th>
+  <td><%= idea.description %></td>
+</tr>
+<tr>
+  <th> Category </th>
+  <td><%= idea.category.name %></td>
+</tr>
+<tr>
+  <th> Images </th>
+    <td><% idea.images.each do |image| %>
+    <%= image_tag image.img.url(:thumb) %>
+    <% end %>
+    <li> <%= link_to("Edit", edit_idea_path(idea)) %>
+      <%= link_to("Delete", idea_path(idea), :method => 'delete') %>
+    </li>
+</tr>
   <% end %>
   <% end %>
-</ul>
+</table>
 
 <%= render partial: 'shared/idea_form', locals: {idea: @user.ideas.new,
   user_id: @user.id}  %>

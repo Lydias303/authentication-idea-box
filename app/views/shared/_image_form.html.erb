@@ -1,0 +1,8 @@
+<div id="images">
+
+<%= bootstrap_form_for image, style: :inline, :url => images_path, :html => { :multipart => true } do |f| %>
+  <%= f.text_field :title %>
+  <%= f.file_field :img %>
+  <%= f.submit "Add Image" %>
+<% end %>
+</div>

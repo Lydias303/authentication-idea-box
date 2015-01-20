@@ -1,7 +1,6 @@
 <div>
-  <%= form_for(category)  do |f|%>
+  <%= bootstrap_form_for(category, style: :inline)  do |f|%>
 
-  <%= f.label :name %><br/>
   <%= f.text_field :name %>
 
   <%= f.submit "Add Category" %>

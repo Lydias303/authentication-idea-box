@@ -1,7 +1,8 @@
 class IdeasController < ApplicationController
-
+  include IdeaHelper
   def create
     @idea = Idea.create(idea_params)
+    add_image(params[:idea][:images])
     redirect_to user_path(@idea.user)
   end
 
@@ -12,6 +13,8 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     @idea.update(idea_params)
+    @idea.images.clear
+    add_image(params[:idea][:images])
     redirect_to user_path(@idea.user)
   end
 

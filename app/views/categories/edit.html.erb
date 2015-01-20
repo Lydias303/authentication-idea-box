@@ -1,10 +1,8 @@
-<h1> Edit Category <%= @category.name %>
+<h1> Edit Category <%= @category.name %> </h1>
 
 <div>
-  <%= form_for(@category)  do |f|%>
-
-  <%= f.label :name %><br/>
+  <%= bootstrap_form_for(@category, layout: :inline)  do |f|%>
   <%= f.text_field :name %>
-  <%= f.submit "Update"%>
+  <button type="submit" class="btn btn-success">Update</button>
   <% end %>
 </div>
